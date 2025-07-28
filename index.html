@@ -1,86 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>爱的告白</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>爱心动画 | I LOVE U</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
         }
 
         body {
             overflow: hidden;
-            background: linear-gradient(to bottom, #120025, #2d0061);
+            background: linear-gradient(135deg, #210036 0%, #4d0082 100%);
             min-height: 100vh;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        #canvas {
+        .background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 60%;
+            width: 100%;
             height: 100%;
             z-index: 1;
         }
 
         .love-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             z-index: 10;
             text-align: center;
             width: 100%;
-            perspective: 800px;
         }
 
         .love-text {
-            color: #a0e7ff;
-            font-size: 2.5rem;
+            color: #8ceeff;
+            font-size: 12vmin;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(64, 224, 255, 0.7), 
-                         0 0 40px rgba(64, 224, 255, 0.5), 
-                         0 0 80px rgba(64, 224, 255, 0.3);
+            letter-spacing: 1vmin;
+            text-shadow: 0 0 2vmin rgba(64, 224, 255, 0.9), 
+                         0 0 4vmin rgba(64, 224, 255, 0.7), 
+                         0 0 8vmin rgba(64, 224, 255, 0.4);
             animation: text-glow 2s infinite alternate, float 3s infinite ease-in-out;
             text-align: center;
+            padding: 0 5vmin;
         }
 
-        .heart-icon {
-            color: #ff6b9d;
+        .heart {
             position: absolute;
-            animation: heartbeat 1.5s infinite;
-            text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
-            opacity: 0.85;
-            font-size: 1.8rem;
+            width: 5vmin;
+            height: 5vmin;
+            background: linear-gradient(145deg, #ff7eb3, #ff2d6d);
+            opacity: 0;
             z-index: 2;
+            border-radius: 50%;
+            box-shadow: 0 0 3vmin #ff69b4;
         }
 
-        .floating-hearts {
+        .heart::before, .heart::after {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 5;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: -50%;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .love-text {
+                font-size: 10vmin;
+                letter-spacing: 0.5vmin;
+            }
+            
+            .heart {
+                width: 4vmin;
+                height: 4vmin;
+            }
         }
 
         @keyframes text-glow {
             0% {
-                text-shadow: 0 0 10px rgba(64, 224, 255, 0.7), 
-                             0 0 20px rgba(64, 224, 255, 0.5), 
-                             0 0 30px rgba(64, 224, 255, 0.3);
+                text-shadow: 0 0 1vmin rgba(64, 224, 255, 0.9), 
+                             0 0 3vmin rgba(64, 224, 255, 0.7), 
+                             0 0 5vmin rgba(64, 224, 255, 0.4);
             }
             100% {
-                text-shadow: 0 0 20px rgba(64, 224, 255, 0.9), 
-                             0 0 40px rgba(64, 224, 255, 0.7), 
-                             0 0 80px rgba(64, 224, 255, 0.5);
+                text-shadow: 0 0 3vmin rgba(64, 224, 255, 0.9), 
+                             0 0 6vmin rgba(64, 224, 255, 0.7), 
+                             0 0 10vmin rgba(64, 224, 255, 0.4);
             }
         }
 
@@ -89,42 +115,42 @@
                 transform: translateY(0) rotate(0.5deg);
             }
             50% {
-                transform: translateY(-10px) rotate(-0.5deg);
+                transform: translateY(-2vmin) rotate(-0.5deg);
             }
         }
 
         @keyframes heartbeat {
             0% {
-                transform: scale(1);
+                transform: scale(0.8);
             }
             25% {
-                transform: scale(1.1);
+                transform: scale(1);
             }
             50% {
-                transform: scale(1);
+                transform: scale(0.9);
             }
             75% {
-                transform: scale(1.2);
+                transform: scale(1.1);
             }
             100% {
-                transform: scale(1);
+                transform: scale(0.8);
             }
         }
 
         @keyframes float-up {
-            to {
-                transform: translateY(-100vh);
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg) scale(0.5);
             }
-        }
-
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-                transform: scale(0.9);
-            }
-            50% {
+            10% {
                 opacity: 1;
-                transform: scale(1.1);
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-80vmin) rotate(360deg) scale(1.5);
             }
         }
 
@@ -134,24 +160,30 @@
             animation: bounce 1.2s infinite;
         }
 
-        .letter:nth-child(1) { animation-delay: 0.1s; }
+        .letter:nth-child(1) { animation-delay: 0.1s; color: #ff9ec8; }
         .letter:nth-child(2) { animation-delay: 0.2s; }
-        .letter:nth-child(3) { animation-delay: 0.3s; }
+        .letter:nth-child(3) { animation-delay: 0.3s; color: #ffaed5; }
         .letter:nth-child(4) { animation-delay: 0.4s; }
-        .letter:nth-child(5) { animation-delay: 0.5s; }
+        .letter:nth-child(5) { animation-delay: 0.5s; color: #ffc0e0; }
         .letter:nth-child(6) { animation-delay: 0.6s; }
-        .letter:nth-child(7) { animation-delay: 0.7s; }
+        .letter:nth-child(7) { animation-delay: 0.7s; color: #ffd4ec; }
+        .letter:nth-child(8) { animation-delay: 0.8s; }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { 
+                transform: translateY(0);
+                text-shadow: 0 0 1vmin rgba(64, 224, 255, 0.9);
+            }
+            50% { 
+                transform: translateY(-3vmin);
+                text-shadow: 0 0 3vmin rgba(64, 224, 255, 0.8), 
+                             0 0 5vmin rgba(64, 224, 255, 0.5);
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    
-    <div class="floating-hearts" id="floating-hearts"></div>
+    <div class="background"></div>
     
     <div class="love-container">
         <div class="love-text">
@@ -167,116 +199,91 @@
     </div>
 
     <script>
-        // 初始化Canvas
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        let hearts = [];
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // 绘制爱心函数
-        function drawHeart(x, y, size, alpha) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.beginPath();
-            ctx.globalAlpha = alpha;
-            ctx.fillStyle = '#ff6b9d';
-            
-            for(let angle = 0; angle < Math.PI * 2; angle += 0.01) {
-                const px = size * 16 * Math.pow(Math.sin(angle), 3);
-                const py = -size * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 
-                                   2 * Math.cos(3 * angle) - Math.cos(4 * angle));
-                ctx.lineTo(px, py);
-            }
-            
-            ctx.fill();
-            
-            // 添加光晕效果
-            ctx.shadowColor = '#ff69b4';
-            ctx.shadowBlur = 15;
-            ctx.fill();
-            ctx.restore();
-        }
-        
-        // 创建爱心对象
+        // 创建爱心函数
         function createHeart() {
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 0.8 + 0.5,
-                alpha: Math.random() * 0.7 + 0.3,
-                speed: Math.random() * 2 + 0.5,
-                blink: Math.random() * 100
-            };
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // 随机位置
+            const left = Math.random() * 100;
+            heart.style.left = `${left}%`;
+            heart.style.top = `${100 + Math.random() * 20}%`;
+            
+            // 随机大小
+            const size = 0.5 + Math.random() * 1;
+            heart.style.width = `${size * 5}vmin`;
+            heart.style.height = `${size * 5}vmin`;
+            
+            // 随机颜色（粉色调变化）
+            const pinkShade = Math.floor(Math.random() * 60 + 180);
+            heart.style.background = `linear-gradient(145deg, #ff${pinkShade.toString(16)}e6, #ff2d6d)`;
+            
+            // 随机动画
+            const duration = 4 + Math.random() * 6;
+            const delay = Math.random() * 5;
+            heart.style.animation = `float-up ${duration}s linear ${delay}s forwards, heartbeat ${1 + Math.random()}s ease-in-out infinite`;
+            
+            // 添加到背景
+            document.querySelector('.background').appendChild(heart);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                heart.remove();
+            }, (duration + delay) * 1000);
         }
         
-        // 初始化爱心
+        // 初始创建爱心
         function initHearts() {
-            hearts = [];
-            for (let i = 0; i < 100; i++) {
-                hearts.push(createHeart());
-            }
-        }
-        
-        // 动画循环
-        function animate() {
-            requestAnimationFrame(animate);
+            // 根据屏幕宽度决定爱心密度
+            const density = Math.min(4, Math.max(1, Math.floor(window.innerWidth / 200)));
             
-            // 半透明填充清除画布
-            ctx.fillStyle = 'rgba(18, 0, 37, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // 更新并绘制爱心
-            hearts.forEach(heart => {
-                heart.y -= heart.speed;
-                heart.blink += 0.05;
-                heart.alpha = Math.abs(Math.sin(heart.blink)) * 0.5 + 0.3;
-                
-                if (heart.y < -30) {
-                    heart.y = canvas.height + 20;
-                    heart.x = Math.random() * canvas.width;
+            // 持续创建爱心
+            setInterval(() => {
+                for (let i = 0; i < density; i++) {
+                    createHeart();
                 }
-                
-                drawHeart(heart.x, heart.y, heart.size, heart.alpha);
-            });
-        }
-        
-        // 创建额外漂浮爱心元素
-        function createFloatingHearts() {
-            const container = document.getElementById('floating-hearts');
-            const numHearts = 20;
-            
-            for (let i = 0; i < numHearts; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤';
-                heart.classList.add('heart-icon');
-                
-                // 随机位置和动画
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.top = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                
-                // 随机大小
-                heart.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
-                
-                // 随机透明度
-                heart.style.opacity = Math.random() * 0.6 + 0.2;
-                
-                container.appendChild(heart);
-            }
+            }, 300);
         }
         
         // 启动动画
-        initHearts();
-        animate();
-        createFloatingHearts();
+        window.addEventListener('DOMContentLoaded', () => {
+            initHearts();
+            
+            // 添加点击效果
+            document.addEventListener('click', (e) => {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const clickHeart = document.createElement('div');
+                        clickHeart.classList.add('heart');
+                        clickHeart.style.position = 'fixed';
+                        clickHeart.style.left = `${e.clientX}px`;
+                        clickHeart.style.top = `${e.clientY}px`;
+                        clickHeart.style.width = '10vmin';
+                        clickHeart.style.height = '10vmin';
+                        clickHeart.style.opacity = '1';
+                        clickHeart.style.animation = `heartbeat 0.8s ease-out forwards`;
+                        document.body.appendChild(clickHeart);
+                        
+                        // 移除爱心
+                        setTimeout(() => {
+                            clickHeart.style.transition = 'transform 0.5s, opacity 0.5s';
+                            clickHeart.style.transform = 'scale(0)';
+                            clickHeart.style.opacity = '0';
+                            setTimeout(() => {
+                                clickHeart.remove();
+                            }, 500);
+                        }, 800);
+                    }, i * 100);
+                }
+            });
+        });
+        
+        // 处理窗口大小变化
+        window.addEventListener('resize', () => {
+            // 移除所有爱心，新的爱心会根据新窗口大小创建
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => heart.remove());
+        });
     </script>
 </body>
 </html>
